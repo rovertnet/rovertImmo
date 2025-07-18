@@ -1,3 +1,5 @@
+import Footer from "./components/footer/Footer";
+import ScrollToTop from "./components/footer/ScrollToTop";
 import NavBar from "./components/header/NavBar"
 import AboutSection from "./components/home/AboutSection";
 import CallToActionSection from "./components/home/CallToActionSection";
@@ -14,6 +16,8 @@ function App() {
       <AboutSection />
       <ServicesSection />
       <CallToActionSection />
+      <Footer />
+      <ScrollToTop />
     </>
   );
 }
