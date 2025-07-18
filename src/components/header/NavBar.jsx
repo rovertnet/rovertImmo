@@ -23,10 +23,13 @@ export default function NavBar() {
           {/* Desktop menu */}
           <ul className="hidden md:flex space-x-6">
             <li className="text-blue-800 hover:text-blue-500">
-              <a href="/">Home</a>
+              <a href="/">Accueil</a>
             </li>
             <li className="text-blue-800 hover:text-blue-500">
-              <a href="/about">About</a>
+              <a href="/ours">Propriétés</a>
+            </li>
+            <li className="text-blue-800 hover:text-blue-500">
+              <a href="/about">A propos</a>
             </li>
             <li className="text-blue-800 hover:text-blue-500">
               <a href="/contact">Contact</a>

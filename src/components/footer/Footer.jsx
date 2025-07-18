@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { Facebook, Instagram, Twitter } from "lucide-react"; // Icônes modernes
 
@@ -19,6 +18,9 @@ export default function Footer() {
         <ul className="flex space-x-6 text-gray-300">
           <li className="hover:text-white transition">
             <a href="/">Accueil</a>
+          </li>
+          <li className="text-blue-800 hover:text-blue-500">
+            <a href="/ours"></a>
           </li>
           <li className="hover:text-white transition">
             <a href="/about">À propos</a>
@@ -56,7 +58,7 @@ export default function Footer() {
 
       {/* Bas du footer */}
       <div className="mt-6 text-center text-gray-400 text-sm">
-        &copy; {new Date().getFullYear()} Rovert Immo. Tous droits réservés.
+        &copy; {new Date().getFullYear()} RovertNet. Tous droits réservés.
       </div>
     </motion.footer>
   );
