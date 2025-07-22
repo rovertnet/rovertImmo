@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import logoImmo from "../../assets/logoImmo.png"; // Adjust the path as necessary
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ export default function NavBar() {
       <nav className="bg-white shadow-md">
         <div className="flex justify-between items-center px-6 py-4">
           {/* Logo */}
-          <h1 className="text-2xl font-bold text-blue-600">Rovert Immo</h1>
+          <img src={logoImmo} alt={logoImmo} className="w-14 h-14" />
 
           {/* Desktop menu */}
           <ul className="hidden md:flex space-x-6">
@@ -39,10 +40,7 @@ export default function NavBar() {
           {/* Buttons (desktop only) */}
           <div className="hidden md:flex space-x-3">
             <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-500">
-              Login
-            </button>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-500">
-              Register
+              Commencez maintenant
             </button>
           </div>
 
@@ -102,12 +100,9 @@ export default function NavBar() {
                 </li>
               </ul>
               <div className="flex flex-col space-y-2 mt-3">
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-500">
-                  Login
-                </button>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-500">
-                  Register
-                </button>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-500">
+              Commencez maintenant
+            </button>
               </div>
             </motion.div>
           )}
