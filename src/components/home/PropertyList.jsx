@@ -12,7 +12,7 @@ const properties = [
     category: "Villa",
     location: "Kinshasa, Gombe",
     image:
-      "https://images.unsplash.com/photo-1560448071-72a6ad1b582d?auto=format&fit=crop&w=800&q=80",
+      "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&h=350",
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const properties = [
     category: "Appartement",
     location: "Kinshasa, Ngaliema",
     image:
-      "https://images.unsplash.com/photo-1572120360610-d971b9b63949?auto=format&fit=crop&w=800&q=80",
+      "https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg?auto=compress&cs=tinysrgb&h=350",
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ const properties = [
     category: "Maison",
     location: "Kinshasa, Mont-Ngafula",
     image:
-      "https://images.unsplash.com/photo-1599423300746-b62533397364?auto=format&fit=crop&w=800&q=80",
+      "https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg?auto=compress&cs=tinysrgb&h=350",
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const properties = [
     category: "Appartement",
     location: "Kinshasa, Limete",
     image:
-      "https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=800&q=80",
+      "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&h=350",
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const properties = [
     category: "Loft",
     location: "Kinshasa, Bandal",
     image:
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=800&q=80",
+      "https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&h=350",
   },
   {
     id: 6,
@@ -67,10 +67,43 @@ const properties = [
     category: "Penthouse",
     location: "Kinshasa, Gombe",
     image:
-      "https://images.unsplash.com/photo-1586105251261-72a756497a12?auto=format&fit=crop&w=800&q=80",
+      "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&h=350",
   },
-  // Ajoute encore plus d'éléments ici...
+  {
+    id: 7,
+    title: "Résidence avec terrasse",
+    description: "Maison élégante avec grande terrasse et vue dégagée.",
+    price: 300000,
+    priceLabel: "300 000€",
+    category: "Maison",
+    location: "Kinshasa, Kintambo",
+    image:
+      "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&h=350",
+  },
+  {
+    id: 8,
+    title: "Appartement cosy",
+    description: "Appartement idéal pour jeunes couples.",
+    price: 150000,
+    priceLabel: "150 000€",
+    category: "Appartement",
+    location: "Kinshasa, Masina",
+    image:
+      "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&h=350",
+  },
+  {
+    id: 9,
+    title: "Villa avec piscine",
+    description: "Villa de luxe avec piscine et jardin tropical.",
+    price: 550000,
+    priceLabel: "550 000€",
+    category: "Villa",
+    location: "Kinshasa, Gombe",
+    image:
+      "https://images.pexels.com/photos/261146/pexels-photo-261146.jpeg?auto=compress&cs=tinysrgb&h=350",
+  },
 ];
+
 
 const categories = [
   "Toutes",
@@ -91,10 +124,9 @@ export default function PropertyList() {
   const [selectedCategory, setSelectedCategory] = useState("Toutes");
   const [selectedPriceRange, setSelectedPriceRange] = useState(priceRanges[0]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Pagination
   const itemsPerPage = 3; // Nombre d'éléments par page
-  const [visibleCount, setVisibleCount] = useState(itemsPerPage);
 
   // Filtrer les propriétés
   const filteredProperties = properties.filter((property) => {
@@ -112,8 +144,15 @@ export default function PropertyList() {
     return categoryMatch && priceMatch && searchMatch;
   });
 
-  // Propriétés visibles
-  const visibleProperties = filteredProperties.slice(0, visibleCount);
+  // Pagination
+  const totalFilteredPages = Math.ceil(
+    filteredProperties.length / itemsPerPage
+  );
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const visibleProperties = filteredProperties.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   return (
     <section className="py-12 px-6 bg-gray-50">
@@ -133,7 +172,10 @@ export default function PropertyList() {
         {/* Catégorie */}
         <select
           value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+            setCurrentPage(1); // Reset page lors du changement
+          }}
           className="border border-gray-300 rounded px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           {categories.map((cat) => (
@@ -146,11 +188,12 @@ export default function PropertyList() {
         {/* Prix */}
         <select
           value={selectedPriceRange.label}
-          onChange={(e) =>
+          onChange={(e) => {
             setSelectedPriceRange(
               priceRanges.find((range) => range.label === e.target.value)
-            )
-          }
+            );
+            setCurrentPage(1); // Reset page lors du changement
+          }}
           className="border border-gray-300 rounded px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           {priceRanges.map((range) => (
@@ -165,13 +208,24 @@ export default function PropertyList() {
           type="text"
           placeholder="Rechercher par titre ou localisation..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+            setCurrentPage(1); // Reset page lors de la recherche
+          }}
           className="border border-gray-300 rounded px-4 py-2 text-gray-700 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
       {/* Liste filtrée */}
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        className="
+    grid gap-8 md:grid-cols-2 lg:grid-cols-3
+    md:overflow-visible
+    overflow-x-auto flex md:grid
+    snap-x snap-mandatory
+    scrollbar-hide
+  "
+      >
         {visibleProperties.length === 0 ? (
           <p className="text-center col-span-full text-gray-500">
             Aucun bien ne correspond aux critères.
@@ -184,11 +238,20 @@ export default function PropertyList() {
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-lg shadow hover:shadow-lg transition"
+              className="
+          bg-white rounded-lg shadow hover:shadow-lg transition
+          min-w-[250px] md:min-w-0 md:w-auto
+          snap-center
+          shrink-0
+        "
             >
               <img
                 src={property.image}
                 alt={property.title}
+                onError={(e) =>
+                  (e.target.src =
+                    "https://via.placeholder.com/400x300?text=Image+indisponible")
+                }
                 className="h-48 w-full object-cover rounded-t-lg"
               />
               <div className="p-4">
@@ -209,14 +272,47 @@ export default function PropertyList() {
         )}
       </div>
 
-      {/* Bouton Charger Plus */}
-      {visibleCount < filteredProperties.length && (
-        <div className="flex justify-center mt-8">
+      {/* Pagination */}
+      {totalFilteredPages > 1 && (
+        <div className="flex justify-center items-center gap-2 mt-8 flex-wrap">
           <button
-            onClick={() => setVisibleCount(visibleCount + itemsPerPage)}
-            className="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-500 transition"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className={`px-3 py-1 rounded ${
+              currentPage === 1
+                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                : "bg-blue-600 text-white hover:bg-blue-500"
+            }`}
           >
-            Charger plus
+            Précédent
+          </button>
+
+          {[...Array(totalFilteredPages)].map((_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => setCurrentPage(index + 1)}
+              className={`px-3 py-1 rounded ${
+                currentPage === index + 1
+                  ? "bg-blue-700 text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalFilteredPages))
+            }
+            disabled={currentPage === totalFilteredPages}
+            className={`px-3 py-1 rounded ${
+              currentPage === totalFilteredPages
+                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                : "bg-blue-600 text-white hover:bg-blue-500"
+            }`}
+          >
+            Suivant
           </button>
         </div>
       )}
